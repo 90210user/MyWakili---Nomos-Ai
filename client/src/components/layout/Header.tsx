@@ -34,13 +34,13 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white shadow-sm">
+      <header className="bg-background border-b border-border shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
               <div className="flex items-center">
-                <i className="ri-scales-3-line text-primary-700 text-2xl mr-2"></i>
-                <h1 className="text-xl font-heading font-bold text-primary-700">
+                <i className="ri-scales-3-line text-primary text-2xl mr-2"></i>
+                <h1 className="text-xl font-heading font-bold text-primary">
                   {t("common.appName")}
                 </h1>
               </div>
@@ -53,7 +53,7 @@ export default function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="text-gray-700 hover:text-primary-600 text-sm font-medium"
+                      className="text-foreground hover:text-primary text-sm font-medium"
                     >
                       {item.label}
                     </Link>
@@ -76,7 +76,7 @@ export default function Header() {
 
             {isMobile && (
               <button 
-                className="text-gray-700" 
+                className="text-foreground" 
                 onClick={toggleMobileMenu}
                 aria-label="Toggle mobile menu"
               >
