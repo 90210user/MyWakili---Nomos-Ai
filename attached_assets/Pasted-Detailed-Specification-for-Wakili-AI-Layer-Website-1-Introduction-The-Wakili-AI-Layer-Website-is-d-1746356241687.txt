@@ -1,0 +1,151 @@
+Detailed Specification for Wakili AI Layer Website
+1. Introduction
+
+The Wakili AI Layer Website is designed to provide accessible, affordable, and efficient legal services to Kenyans, inspired by Wakili.org. It aims to democratize justice by leveraging AI technology to offer real-time legal advice, legal research, and support for small and medium-sized enterprises (SMEs). The platform will cater to individuals, businesses, and vulnerable communities, supporting multiple languages such as English and Kiswahili. Built with a modern tech stack, the website ensures a seamless user experience while integrating advanced AI and payment functionalities.
+2. Features
+
+The website will offer a comprehensive set of features to address various legal needs:
+2.1 User Authentication
+
+    Sign-up/Login: Users can create accounts or log in using email/password or social logins (e.g., Google) via Firebase Authentication.
+    Profile Management: Users can update personal details, language preferences, and view consultation history.
+
+2.2 Real-time Legal Advice
+
+    Chat Interface: A user-friendly chat system where users can ask legal questions and receive immediate AI-generated responses.
+    AI Integration: Powered by OpenAI to provide natural language processing for legal queries.
+    Multilingual Support: Responses in English, Kiswahili, and potentially other languages based on user preferences.
+
+2.3 Legal Research Tool
+
+    Search Functionality: Allows users to search for laws, cases, and legal documents.
+    AI Summarization: Uses OpenAI to summarize and explain complex legal content in simple terms.
+    Data Source: Assumes integration with a legal database (e.g., Kenya Law Reports) or manual data collection due to the lack of a public API.
+
+2.4 SME and Enterprise Support
+
+    Contract Generation: AI-assisted tools to create and review business contracts.
+    Compliance Checks: Guidance on regulatory compliance for SMEs, potentially referencing Kenyan business laws.
+    Custom Solutions: Tailored AI support for larger enterprises, such as automated legal audits.
+
+2.5 Payment Integration
+
+    M-Pesa Payments: Integration with Daraja API for seamless mobile payments.
+    Payment Plans: Support for one-time consultations, subscriptions, or tiered pricing models.
+    Transaction Records: Stored securely in Firebase Firestore for user reference.
+
+2.6 Multilingual Support
+
+    Interface: Uses react-i18next for internationalization, supporting English, Kiswahili, and other languages.
+    AI Responses: OpenAI models generate responses in the user’s selected language.
+
+2.7 Alternative Dispute Resolution
+
+    Mediation Tools: Platforms for scheduling and conducting mediation sessions.
+    AI Assistance: Generates negotiation strategies or mediation documents.
+    Document Sharing: Secure upload and sharing of dispute-related documents.
+
+3. Tech Stack
+
+The website is built with a robust and modern technology stack to ensure performance, scalability, and ease of development:
+Component	Technology	Purpose
+Frontend	Vite	Fast build tool for development and production.
+Frontend	TypeScript	Adds type safety to JavaScript for robust code.
+Frontend	TailwindCSS	Utility-first CSS framework for rapid UI styling.
+Frontend	React.js	Component-based library for dynamic interfaces.
+Backend	Firebase	Handles authentication, database, and serverless functions.
+APIs	OpenAI	Powers AI-driven legal advice and research.
+APIs	Daraja	Facilitates M-Pesa payment processing.
+4. Architecture
+
+The application follows a client-server architecture:
+
+    Frontend: A single-page React application hosted on Firebase Hosting.
+    Backend: Firebase Cloud Functions handle server-side logic, API calls, and integrations.
+    Database: Firestore stores user data, chat histories, and payment records.
+    External APIs: OpenAI for AI processing and Daraja for payment transactions.
+
+5. Data Models
+
+Firestore collections are designed to store essential data:
+Collection	Fields	Description
+Users	userId: string, email: string, name: string, language: string, createdAt: timestamp, lastLogin: timestamp	Stores user profiles and preferences.
+Chats	chatId: string, userId: string, messages: array[{role: string, content: string, timestamp: timestamp}]	Stores chat histories for each user.
+Payments	paymentId: string, userId: string, amount: number, currency: string, status: string, createdAt: timestamp	Tracks payment transactions.
+6. API Integrations
+6.1 OpenAI API
+
+    Purpose: Generates legal advice and summarizes research queries.
+    Implementation: Cloud Functions construct prompts (e.g., “You are a legal assistant in Kenya. Provide advice in [language]: [query]”) and call OpenAI’s endpoints.
+    Challenges: Ensuring accuracy in Kenyan law may require contextual data, as OpenAI’s models rely on training data up to a certain point.
+
+6.2 Daraja API
+
+    Purpose: Processes M-Pesa payments for services.
+    Implementation: Cloud Functions handle payment initiation (e.g., STK Push) and confirmation, storing results in Firestore.
+    Endpoints: Includes C2B, B2C, and Transaction Status APIs, as per Safaricom’s documentation.
+
+7. User Flow
+
+    Homepage: Users view services and are prompted to sign up or log in.
+    Authentication: Users sign up/log in via Firebase Authentication.
+    Service Selection: Users choose services like legal advice or research.
+    Real-time Legal Advice:
+        Users enter a chat interface and type a question.
+        The frontend sends the query to a Cloud Function.
+        The function queries OpenAI and returns the response.
+        The response is displayed and saved in Firestore.
+    Legal Research:
+        Users enter a search query.
+        The system retrieves and summarizes relevant legal content.
+        Results are displayed in a list or grid.
+    Payments:
+        Users select a paid service and enter payment details.
+        The frontend calls a Cloud Function to initiate payment via Daraja.
+        Payment status is updated and shown.
+
+8. Security and Privacy
+
+    Authentication: Firebase Authentication ensures secure user access.
+    Data Access: Firestore security rules restrict data to authorized users.
+    Encryption: Sensitive data (e.g., chat histories) is encrypted at rest.
+    Compliance: Adheres to data protection regulations, with disclaimers about AI limitations.
+
+9. Scalability
+
+    Firebase: Scales automatically to handle increased traffic.
+    Optimization: Cloud Functions are optimized for performance and cost.
+    Caching: Frequently accessed data is cached to reduce latency.
+
+10. Deployment
+
+    Frontend: Deployed on Firebase Hosting using the Firebase CLI.
+    Backend: Cloud Functions are deployed via Firebase CLI.
+    Domain: A custom domain is configured to point to Firebase Hosting.
+
+11. Future Enhancements
+
+    Legal Database Integration: Partner with Kenya Law or similar for comprehensive data.
+    Advanced AI: Develop personalized legal assistants or predictive analytics.
+    Mobile Apps: Create iOS and Android applications.
+    Global Expansion: Extend services to other jurisdictions.
+
+12. Challenges and Considerations
+
+    Legal Accuracy: AI-generated legal advice may lack precision without up-to-date Kenyan law data. A disclaimer is necessary to clarify that AI is not a substitute for professional legal advice.
+    Data Access: The absence of a public Kenyan law API may require manual data collection or partnerships.
+    Ethical AI: Ensure AI responses are unbiased and culturally sensitive.
+    Cost Management: Monitor OpenAI and Firebase usage to control costs.
+
+Key Citations
+
+    Wakili.org Official Website
+    Safaricom Daraja API Documentation
+    OpenAI API Documentation
+    Firebase Official Documentation
+    Kenya Law Reports Website
+    Vite Build Tool Documentation
+    TypeScript Official Documentation
+    TailwindCSS Official Documentation
+    React.js Official Documentation
+    react-i18next Internationalization Framework
