@@ -6,7 +6,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 const enTranslations = {
   common: {
     languageName: 'English',
-    appName: 'Wakili AI',
+    appName: 'MyWakili AI',
     loading: 'Loading...',
     error: 'An error occurred',
     retry: 'Retry',
@@ -48,7 +48,7 @@ const enTranslations = {
   chat: {
     title: 'Legal Assistant',
     subtitle: 'Ask any legal question in English or Kiswahili',
-    welcomeMessage: 'Hello! I\'m your Wakili AI legal assistant. How can I help you with your legal questions today? You can ask me in English or Kiswahili.',
+    welcomeMessage: 'Hello! I\'m your MyWakili AI legal assistant. How can I help you with your legal questions today? You can ask me in English or Kiswahili.',
     disclaimer: 'Note: This AI provides general legal information, not legal advice.',
     inputPlaceholder: 'Type your question here...',
     source: 'Source',
@@ -175,7 +175,7 @@ const enTranslations = {
     or: 'or',
   },
   footer: {
-    rights: '© 2023 Wakili AI. All rights reserved.',
+    rights: '© 2023 MyWakili AI. All rights reserved.',
     services: 'Services',
     company: 'Company',
     legal: 'Legal',
@@ -206,7 +206,7 @@ const enTranslations = {
 const swTranslations = {
   common: {
     languageName: 'Kiswahili',
-    appName: 'Wakili AI',
+    appName: 'MyWakili AI',
     loading: 'Inapakia...',
     error: 'Hitilafu imetokea',
     retry: 'Jaribu tena',
@@ -248,7 +248,7 @@ const swTranslations = {
   chat: {
     title: 'Msaidizi wa Kisheria',
     subtitle: 'Uliza swali lolote la kisheria kwa Kiingereza au Kiswahili',
-    welcomeMessage: 'Habari! Mimi ni msaidizi wako wa kisheria wa Wakili AI. Ninawezaje kukusaidia leo? Unaweza kuuliza kwa Kiingereza au Kiswahili.',
+    welcomeMessage: 'Habari! Mimi ni msaidizi wako wa kisheria wa MyWakili AI. Ninawezaje kukusaidia leo? Unaweza kuuliza kwa Kiingereza au Kiswahili.',
     disclaimer: 'Kumbuka: AI hii inatoa taarifa za jumla za kisheria, sio ushauri wa kisheria.',
     inputPlaceholder: 'Andika swali lako hapa...',
     source: 'Chanzo',
@@ -375,7 +375,7 @@ const swTranslations = {
     or: 'au',
   },
   footer: {
-    rights: '© 2023 Wakili AI. Haki zote zimehifadhiwa.',
+    rights: '© 2023 MyWakili AI. Haki zote zimehifadhiwa.',
     services: 'Huduma',
     company: 'Kampuni',
     legal: 'Kisheria',
