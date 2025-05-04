@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "wouter";
 import { LanguageToggle } from "@/components/ui/language-toggle";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-mobile";
 import MobileMenu from "./MobileMenu";
@@ -61,10 +62,11 @@ export default function Header() {
 
                 <div className="flex items-center space-x-3">
                   <LanguageToggle />
+                  <ThemeToggle />
                   
                   <Button
                     onClick={openAuthDialog}
-                    className="bg-primary-700 hover:bg-primary-800 text-white"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
                     {t("navigation.signIn")}
                   </Button>
