@@ -21,14 +21,14 @@ export default function MobileMenu({
   if (!isOpen) return null;
   
   return (
-    <div className="md:hidden bg-white border-b border-gray-200">
+    <div className="md:hidden bg-background border-b border-border">
       <div className="container mx-auto px-4 py-3">
         <nav className="flex flex-col space-y-3">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-gray-700 hover:text-primary-600 py-2 text-sm font-medium"
+              className="text-foreground hover:text-primary py-2 text-sm font-medium"
               onClick={onClose}
             >
               {item.label}
@@ -36,11 +36,11 @@ export default function MobileMenu({
           ))}
         </nav>
         
-        <div className="flex flex-col space-y-3 mt-4 border-t pt-4">
-          <LanguageToggle />
+        <div className="flex flex-col space-y-3 mt-4 border-t border-border pt-4">
+          <LanguageToggle variant="footer" />
           
           <Button
-            className="bg-primary-700 hover:bg-primary-800 text-white w-full"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground w-full"
             onClick={onOpenAuth}
           >
             {t("navigation.signIn")}
