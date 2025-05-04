@@ -119,11 +119,11 @@ export default function ResearchTool() {
 
   return (
     <section id="research" className="mb-10">
-      <h3 className="font-heading text-xl md:text-2xl font-semibold mb-6 text-gray-800">
+      <h3 className="font-heading text-xl md:text-2xl font-semibold mb-6 text-foreground">
         {t("research.title")}
       </h3>
       
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+      <div className="bg-card rounded-lg shadow-sm border border-border p-6">
         <div className="mb-6">
           <form 
             id="research-form" 
@@ -134,13 +134,13 @@ export default function ResearchTool() {
               <div className="relative">
                 <Input
                   type="text"
-                  className="w-full border border-gray-200 rounded-lg py-3 px-4 pr-10 focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
+                  className="w-full border-border rounded-lg py-3 px-4 pr-10 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:border-transparent"
                   placeholder={t("research.searchPlaceholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   disabled={isSearching}
                 />
-                <Search className="absolute right-3 top-3 h-4 w-4 text-gray-400" />
+                <Search className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
               </div>
             </div>
             
@@ -165,15 +165,15 @@ export default function ResearchTool() {
             <Button
               type="submit"
               disabled={isSearching}
-              className="bg-secondary-600 hover:bg-secondary-700 text-white"
+              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
             >
               {t("research.search")}
             </Button>
           </form>
         </div>
         
-        <div className="mb-4 bg-gray-50 p-4 rounded-md">
-          <h4 className="font-medium text-gray-700 mb-2 text-sm uppercase">
+        <div className="mb-4 bg-muted p-4 rounded-md">
+          <h4 className="font-medium text-foreground mb-2 text-sm uppercase">
             {t("research.popularSearches")}
           </h4>
           <div className="flex flex-wrap gap-2">
@@ -181,7 +181,7 @@ export default function ResearchTool() {
               <Button
                 key={index}
                 variant="outline"
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700"
+                className="bg-background hover:bg-background/90 text-foreground"
                 onClick={() => handlePopularSearch(term)}
               >
                 {term}
@@ -190,22 +190,22 @@ export default function ResearchTool() {
           </div>
         </div>
         
-        <div className="border-t border-gray-100 pt-6">
-          <h4 className="font-medium text-gray-800 mb-4">
+        <div className="border-t border-border pt-6">
+          <h4 className="font-medium text-card-foreground mb-4">
             {t("research.searchResults")}
           </h4>
           
           {/* If no search performed yet */}
           {!searchPerformed && (
-            <div className="text-center py-8 text-gray-500">
-              <Search className="mx-auto h-12 w-12 mb-2 text-gray-300" />
+            <div className="text-center py-8 text-muted-foreground">
+              <Search className="mx-auto h-12 w-12 mb-2 text-muted" />
               <p>{t("research.noSearchYet")}</p>
             </div>
           )}
           
           {/* If search performed but no results */}
           {searchPerformed && searchResults.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-muted-foreground">
               <p>No results found for "{searchQuery}"</p>
             </div>
           )}
@@ -216,12 +216,12 @@ export default function ResearchTool() {
               {searchResults.map((result, index) => (
                 <div 
                   key={index}
-                  className="border border-gray-100 rounded-lg p-4 mb-4 hover:shadow-sm transition-shadow"
+                  className="border border-border rounded-lg p-4 mb-4 hover:shadow-sm transition-shadow"
                 >
                   <div className="flex items-start">
                     <div className="flex-1">
-                      <h5 className="font-medium text-gray-800 mb-1">{result.title}</h5>
-                      <p className="text-gray-600 text-sm mb-2">
+                      <h5 className="font-medium text-card-foreground mb-1">{result.title}</h5>
+                      <p className="text-muted-foreground text-sm mb-2">
                         {result.content.substring(0, 150)}...
                       </p>
                       
@@ -229,14 +229,14 @@ export default function ResearchTool() {
                         {result.tags.map((tag, tagIndex) => (
                           <span 
                             key={tagIndex}
-                            className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs"
+                            className="bg-muted text-muted-foreground px-2 py-0.5 rounded-full text-xs"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
                       
-                      <div className="flex items-center text-xs text-gray-500">
+                      <div className="flex items-center text-xs text-muted-foreground">
                         <span>{t("research.lastUpdated")}: {result.lastUpdated}</span>
                         {result.citation && (
                           <>
@@ -250,7 +250,7 @@ export default function ResearchTool() {
                     <div className="ml-4 flex-shrink-0">
                       <Button
                         variant="link"
-                        className="text-secondary-600 hover:text-secondary-700 text-sm font-medium flex items-center"
+                        className="text-secondary hover:text-secondary/90 text-sm font-medium flex items-center"
                       >
                         {t("research.view")} <ArrowRight className="ml-1 h-4 w-4" />
                       </Button>
@@ -258,10 +258,10 @@ export default function ResearchTool() {
                   </div>
                   
                   {/* AI Summary (Expandable) */}
-                  <div className="mt-3 pt-3 border-t border-gray-100">
+                  <div className="mt-3 pt-3 border-t border-border">
                     <Button
                       variant="ghost"
-                      className="flex items-center text-sm text-gray-700 mb-2 p-0 h-auto"
+                      className="flex items-center text-sm text-foreground mb-2 p-0 h-auto"
                       onClick={() => toggleSummary(index)}
                     >
                       <Bot className="mr-1 h-4 w-4" />
@@ -274,12 +274,12 @@ export default function ResearchTool() {
                     </Button>
                     
                     {result.showSummary && (
-                      <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
+                      <div className="bg-muted p-3 rounded-md text-sm text-foreground">
                         {result.summary ? (
                           <div dangerouslySetInnerHTML={{ __html: result.summary.replace(/\n/g, '<br>') }} />
                         ) : (
                           <div className="flex justify-center py-2">
-                            <div className="w-6 h-6 border-2 border-secondary-500 border-t-transparent rounded-full animate-spin"></div>
+                            <div className="w-6 h-6 border-2 border-secondary border-t-transparent rounded-full animate-spin"></div>
                           </div>
                         )}
                       </div>

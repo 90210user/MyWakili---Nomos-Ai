@@ -103,28 +103,28 @@ export default function SMETools() {
 
   return (
     <section id="sme" className="mb-10">
-      <h3 className="font-heading text-xl md:text-2xl font-semibold mb-6 text-gray-800">
+      <h3 className="font-heading text-xl md:text-2xl font-semibold mb-6 text-foreground">
         {t("sme.title")}
       </h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Contract Generator */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+        <div className="bg-card rounded-lg shadow-sm border border-border p-6">
           <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-accent-100 flex items-center justify-center text-accent-500 mr-3">
+            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent mr-3">
               <FileText className="h-5 w-5" />
             </div>
-            <h4 className="font-heading font-medium text-lg">
+            <h4 className="font-heading font-medium text-lg text-card-foreground">
               {t("sme.contractGenerator.title")}
             </h4>
           </div>
           
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             {t("sme.contractGenerator.description")}
           </p>
           
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               {t("sme.contractGenerator.contractType")}
             </label>
             <Select
@@ -146,7 +146,7 @@ export default function SMETools() {
           </div>
           
           <Button
-            className="w-full bg-accent-500 hover:bg-accent-600 text-white"
+            className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
             onClick={handleGenerateContract}
             disabled={isGeneratingContract}
           >
@@ -155,22 +155,22 @@ export default function SMETools() {
         </div>
         
         {/* Compliance Checker */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+        <div className="bg-card rounded-lg shadow-sm border border-border p-6">
           <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-secondary-100 flex items-center justify-center text-secondary-600 mr-3">
+            <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mr-3">
               <ShieldCheck className="h-5 w-5" />
             </div>
-            <h4 className="font-heading font-medium text-lg">
+            <h4 className="font-heading font-medium text-lg text-card-foreground">
               {t("sme.complianceChecker.title")}
             </h4>
           </div>
           
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             {t("sme.complianceChecker.description")}
           </p>
           
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               {t("sme.complianceChecker.industryLabel")}
             </label>
             <Select
@@ -193,7 +193,7 @@ export default function SMETools() {
           </div>
           
           <Button
-            className="w-full bg-secondary-600 hover:bg-secondary-700 text-white"
+            className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
             onClick={handleCheckCompliance}
             disabled={isCheckingCompliance}
           >
