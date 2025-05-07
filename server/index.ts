@@ -57,9 +57,15 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
+  // Check if running in cPanel environment and log helpful information
+  if (isCPanel()) {
+    logCPanelInfo();
+  }
+
   // Use environment variable for port to support various hosting environments
-  // Default to port 5000 for local development
-  const port = process.env.PORT || 5000;
+  // or get specific cPanel port if detected
+  const port = isCPanel() ? getCPanelPort() : (process.env.PORT || 5000);
+  
   server.listen({
     port: Number(port),
     host: "0.0.0.0",

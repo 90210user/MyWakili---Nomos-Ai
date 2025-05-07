@@ -1,13 +1,13 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import OpenAI from "openai";
 import axios from "axios";
-
-// Initialize OpenAI with API key from environment
-const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || "sk-yourapikey" 
-});
+import { 
+  generateChatResponse, 
+  generateDocumentSummary, 
+  generateContract, 
+  checkBusinessCompliance 
+} from "./openai";
 
 // Initialize Daraja API credentials
 const consumerKey = process.env.MPESA_CONSUMER_KEY || "";
@@ -26,21 +26,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Messages are required and must be an array" });
       }
       
-      // Build system message with context about Kenyan law
-      const systemMessage = {
-        role: "system",
-        content: `You are a legal assistant in Kenya. Provide accurate legal information in ${language === "sw" ? "Kiswahili" : "English"}. 
-        Your answers should reference Kenyan law where possible. Always clarify that you are providing general legal information, not legal advice.`
-      };
-      
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [systemMessage, ...messages],
-        temperature: 0.7,
-      });
-      
-      const generatedText = response.choices[0].message.content || "";
+      // Generate response using our OpenAI service
+      const generatedText = await generateChatResponse(messages, language);
       
       // Extract source citation if present (simplified example)
       const sourceMatch = generatedText.match(/Source: ([^\.]+)/);
@@ -93,24 +80,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Document not found" });
       }
       
-      // Generate summary using OpenAI
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: `You are a legal expert in Kenya. Summarize the following legal document in ${language === "sw" ? "Kiswahili" : "English"}, highlighting key points in bullet format.`
-          },
-          {
-            role: "user",
-            content: document.content
-          }
-        ],
-        temperature: 0.5,
-      });
-      
-      const summary = response.choices[0].message.content || "";
+      // Generate summary using our OpenAI service
+      const summary = await generateDocumentSummary(document.content, language as string);
       
       return res.json(summary);
     } catch (error: any) {
@@ -128,24 +99,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Contract type is required" });
       }
       
-      // Generate contract using OpenAI
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: `You are a legal contract specialist in Kenya. Generate a ${contractType} contract in ${language === "sw" ? "Kiswahili" : "English"} based on the provided details, compliant with Kenyan law.`
-          },
-          {
-            role: "user",
-            content: `Please generate a ${contractType} contract with the following details: ${JSON.stringify(details)}`
-          }
-        ],
-        temperature: 0.2,
-      });
-      
-      const contractText = response.choices[0].message.content || "";
+      // Generate contract using our OpenAI service
+      const contractText = await generateContract(contractType, details, language);
       
       return res.json(contractText);
     } catch (error: any) {
@@ -163,27 +118,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Business industry is required" });
       }
       
-      // Generate compliance check using OpenAI
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: `You are a business compliance expert in Kenya. Provide a comprehensive compliance checklist for a ${industry} business in ${language === "sw" ? "Kiswahili" : "English"}, based on Kenyan law and regulations.`
-          },
-          {
-            role: "user",
-            content: `Please provide a compliance checklist for a ${industry} business with the following details: ${JSON.stringify(businessDetails || {})}`
-          }
-        ],
-        temperature: 0.3,
-        response_format: { type: "json_object" }
-      });
+      // Generate compliance check using our OpenAI service
+      const complianceData = await checkBusinessCompliance(industry, businessDetails, language);
       
-      const complianceData = JSON.parse(response.choices[0].message.content || "{}");
-      
-      return res.json(complianceData);
+      return res.json(JSON.parse(complianceData));
     } catch (error: any) {
       console.error("Compliance check error:", error);
       return res.status(500).json({ error: error.message || "Failed to check compliance" });

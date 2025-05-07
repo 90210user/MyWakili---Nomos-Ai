@@ -33,13 +33,26 @@ cp -r dist/client/* "$DEPLOY_DIR/public_html/"
 # Copy server files
 cp -r dist/* "$DEPLOY_DIR/node_app/"
 
-# Create .htaccess to proxy requests to Node.js app
-cat > "$DEPLOY_DIR/public_html/.htaccess" << EOF
+# Copy the .htaccess template to the public_html directory
+if [ -f ".htaccess-template" ]; then
+  echo "Using .htaccess template file"
+  cp ".htaccess-template" "$DEPLOY_DIR/public_html/.htaccess"
+else
+  # Create .htaccess to proxy requests to Node.js app
+  echo "Creating default .htaccess file"
+  cat > "$DEPLOY_DIR/public_html/.htaccess" << EOF
 # Enable rewrite engine
 RewriteEngine On
 
-# Proxy API requests to the Node.js application
-RewriteRule ^api/(.*) http://localhost:5000/\$1 [P,L]
+# Enable proxy
+<IfModule mod_proxy.c>
+    # Enable reverse proxy
+    ProxyRequests Off
+
+    # Proxy API requests to the Node.js application
+    RewriteCond %{REQUEST_URI} ^/api/.*
+    RewriteRule ^api/(.*) http://localhost:5000/api/\$1 [P,L]
+</IfModule>
 
 # Serve static files directly
 RewriteCond %{REQUEST_FILENAME} -f [OR]
@@ -49,6 +62,7 @@ RewriteRule ^ - [L]
 # Serve index.html for all other routes (SPA routing)
 RewriteRule ^ index.html [L]
 EOF
+fi
 
 # Create production package.json for the server
 cat > "$DEPLOY_DIR/node_app/package.json" << EOF
